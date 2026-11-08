@@ -26,7 +26,7 @@ For the test suite, install `requirements-dev.txt` instead of `requirements.txt`
 
 ## Vercel
 
-The `api/index.py`, `vercel.json`, and build script prepare the FastAPI API and Vite UI for a single Vercel project. Vercel builds the frontend into `frontend/dist` and deploys it as the static output alongside the FastAPI function. The app serves `/api` routes through FastAPI. SQLite uses `/tmp` in the Vercel runtime, so order and consent data are demo-only and can reset when the serverless instance restarts. The app does not need a Gemini key to run.
+The root `index.py` exports the FastAPI app, and Vercel's FastAPI framework routes requests through the app so all `/api/*` endpoints work. The build script creates `frontend/dist`, which FastAPI serves at `/` alongside its `/api` routes. SQLite uses `/tmp` in the Vercel runtime, so order and consent data are demo-only and can reset when the serverless instance restarts. The app does not need a Gemini key to run.
 
 ## Demo journeys
 
