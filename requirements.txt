@@ -1,0 +1,8 @@
+fastapi
+uvicorn[standard]
+pydantic
+pandas
+sqlmodel
+google-genai
+pytest
+pytesseract
