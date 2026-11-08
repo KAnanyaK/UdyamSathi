@@ -1,8 +1,5 @@
 fastapi
-uvicorn[standard]
+uvicorn
 pydantic
-pandas
 sqlmodel
 google-genai
-pytest
-pytesseract

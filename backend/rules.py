@@ -3,13 +3,25 @@ from __future__ import annotations
 import os
 import csv
 from pathlib import Path
-import pandas as pd
 
 ROOT = Path(__file__).resolve().parents[1]
 CATALOGUE_PATH = Path(os.getenv("CATALOGUE_PATH", ROOT / "data" / "product_catalogue.csv"))
 
 def _catalogue() -> list[dict]:
-    return pd.read_csv(CATALOGUE_PATH, keep_default_na=False).to_dict(orient="records")
+    # The catalogue is small and uses a fixed CSV schema. Parse it with the
+    # standard library to avoid shipping pandas/numpy in the serverless bundle.
+    numeric_fields = {
+        "price_min_inr_per_month", "price_max_inr_per_month",
+        "one_time_setup_inr", "min_contract_months", "min_employees",
+        "min_sites", "typical_install_days",
+    }
+    with CATALOGUE_PATH.open(encoding="utf-8-sig", newline="") as source:
+        products = list(csv.DictReader(source))
+    for product in products:
+        for field in numeric_fields:
+            if product.get(field, "") != "":
+                product[field] = int(product[field])
+    return products
 
 def _n(profile: dict, *keys: str, default=0):
     for key in keys:

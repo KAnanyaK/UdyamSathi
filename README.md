@@ -22,6 +22,8 @@ cd frontend && npm install && npm run dev
 
 Install the frontend packages with `npm --prefix frontend install`. The React, Vite, Tailwind, and Lucide dependencies are declared in `frontend/package.json`. The optional `GEMINI_API_KEY` is documented in `.env.example`; when present, Gemini receives function tools backed by the deterministic rule engine. The model cannot set eligibility or author prices; the UI displays only catalogue-rule quote values. Without a key or if a model call fails, the scripted advisor keeps the demo working. Browser speech recognition varies by browser and locale; typing remains available.
 
+For the test suite, install `requirements-dev.txt` instead of `requirements.txt` before running `make test`.
+
 ## Vercel
 
 The `api/index.py`, `vercel.json`, and build script prepare the FastAPI API and Vite UI for a single Vercel project. Vercel builds the frontend into `frontend/dist` and deploys it as the static output alongside the FastAPI function. The app serves `/api` routes through FastAPI. SQLite uses `/tmp` in the Vercel runtime, so order and consent data are demo-only and can reset when the serverless instance restarts. The app does not need a Gemini key to run.
