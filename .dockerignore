@@ -1,0 +1,11 @@
+.git
+.vercel
+.pytest_cache
+__pycache__
+*.py[cod]
+tests
+docs
+scripts
+frontend/node_modules
+frontend/dist
+.env

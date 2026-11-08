@@ -24,9 +24,13 @@ Install the frontend packages with `npm --prefix frontend install`. The React, V
 
 For the test suite, install `requirements-dev.txt` instead of `requirements.txt` before running `make test`.
 
-## Vercel
+## Deploy the backend to Railway
 
-The root `index.py` exports the FastAPI app, and Vercel's FastAPI framework routes requests through the app so all `/api/*` endpoints work. The build script creates `frontend/dist`, which FastAPI serves at `/` alongside its `/api` routes. SQLite uses `/tmp` in the Vercel runtime, so order and consent data are demo-only and can reset when the serverless instance restarts. The app does not need a Gemini key to run.
+The root `Dockerfile` runs the FastAPI service and copies the synthetic CSV data it needs. In Railway, create a project from this GitHub repository and deploy from the repository root. Railway detects the Dockerfile and supplies the `PORT` variable. Generate a public domain, then verify `https://YOUR-RAILWAY-DOMAIN/api/health` returns `{"ok":true,...}`. For persistent demo orders, attach a volume mounted at `/var/data` and set `DB_PATH=/var/data/udyamsathi.db`; without a volume, the SQLite demo data resets when Railway replaces the container.
+
+## Deploy the frontend to Vercel
+
+Import the same GitHub repository into Vercel and set **Root Directory** to `frontend`. Use the Vite preset, build command `npm run build`, and output directory `dist`. Set the Production environment variable `VITE_API_BASE_URL` to `https://YOUR-RAILWAY-DOMAIN/api`, then redeploy. The browser frontend sends API requests to Railway; the Vercel rewrite serves React routes such as `/quote` and `/track` from `index.html`. Confirm the Railway health URL first, then open the Vercel URL and send a chatbot message.
 
 ## Demo journeys
 
