@@ -24,7 +24,7 @@ Install the frontend packages with `npm --prefix frontend install`. The React, V
 
 ## Vercel
 
-The root `index.py`, `vercel.json`, and build script prepare the FastAPI API and Vite UI for a single Vercel project. Vercel builds the frontend and FastAPI serves the UI and `/api` routes. SQLite uses `/tmp` in the Vercel runtime, so order and consent data are demo-only and can reset when the serverless instance restarts. The app does not need a Gemini key to run.
+The `api/index.py`, `vercel.json`, and build script prepare the FastAPI API and Vite UI for a single Vercel project. Vercel builds the frontend into `frontend/dist` and deploys it as the static output alongside the FastAPI function. The app serves `/api` routes through FastAPI. SQLite uses `/tmp` in the Vercel runtime, so order and consent data are demo-only and can reset when the serverless instance restarts. The app does not need a Gemini key to run.
 
 ## Demo journeys
 
